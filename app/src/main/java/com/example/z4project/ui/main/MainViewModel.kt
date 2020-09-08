@@ -9,12 +9,12 @@ import com.example.z4project.model.Repository
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val fromRepository= Repository(application)
-    private val loadedList: LiveData<List<Ilustration>> =fromRepository.loadToViewModel()
+    private val loadedList: LiveData<MutableList<Ilustration>> =fromRepository.loadToViewModel()
 
     fun refreshDATAserver(){
         return fromRepository.fetchDATAs()
     }
-    fun getDATAr00m(): LiveData<List<Ilustration>>{
+    fun getDATAr00m(): LiveData<MutableList<Ilustration>>{
         return loadedList
     }
 

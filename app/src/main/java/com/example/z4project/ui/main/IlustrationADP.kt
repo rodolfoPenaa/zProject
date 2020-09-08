@@ -1,5 +1,6 @@
 package com.example.z4project.ui.main
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,9 @@ import kotlinx.android.synthetic.main.item_ilustration_list.view.*
 
 class IlustrationADP(var mDATAset:List<Ilustration>):RecyclerView.Adapter<IlustrationADP.IlustrationHolder>(){
 
-    fun updateViewModel(ilustrationList: List<Ilustration>){
+private val BASEURL:String= "https://corvalan.dev/evade/images/"
+
+    fun updateViewModel(ilustrationList: List<Ilustration>){     //for update observer, usually for  Adapter with a empty List() in the destine.
         mDATAset=ilustrationList
         notifyDataSetChanged()
 
@@ -38,8 +41,9 @@ class IlustrationHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         holder.auth.text=ilustracion.autor
         holder.dataTime.text=ilustracion.fechapub
         holder.piePhoto.text=ilustracion.caption
-        //Glide.with(holder.itemView.context).load(mDATAset[position].url).into(holder.ilustration0)
-        Picasso.get().load(mDATAset[position].url).resize(350,350).centerCrop().into(holder.ilustration0)
+
+        Glide.with(holder.itemView.context).load(BASEURL+mDATAset[position].id).into(holder.ilustration0)
+        //Picasso.get().load(mDATAset[position].url).resize(250,250).centerInside().into(holder.ilustration0)
     }
 
     override fun getItemCount(): Int {

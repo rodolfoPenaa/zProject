@@ -1,6 +1,6 @@
 package com.example.z4project.ui.main
 
-import androidx.lifecycle.ViewModelProviders
+import android.os.BadParcelableException
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,18 +12,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.z4project.R
 import com.example.z4project.model.Ilustration
-import com.example.z4project.model.Rclient
-import kotlinx.android.synthetic.main.main_fragment.*
 import kotlinx.android.synthetic.main.main_fragment.view.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
-    private var catchedList:List<Ilustration> = ArrayList<Ilustration>()
-
+    private var catchedUpdateList:List<Ilustration> = ArrayList<Ilustration>()
+    private val BASE_URL = "https://corvalan.dev/evade/"
     private lateinit var mViewModel: MainViewModel
     private lateinit var ilustratingADP:IlustrationADP
 
@@ -32,7 +27,8 @@ class MainFragment : Fragment() {
         super.onCreate(savedInstanceState)
         mViewModel= ViewModelProvider(this).get(MainViewModel::class.java)
         mViewModel.refreshDATAserver()
-        ilustratingADP= IlustrationADP(catchedList)
+        ilustratingADP= IlustrationADP(catchedUpdateList)
+
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -41,10 +37,14 @@ class MainFragment : Fragment() {
         view.recycled_container.layoutManager = LinearLayoutManager(activity)
 
         mViewModel.getDATAr00m().observe(viewLifecycleOwner, Observer {
-            Log.d("DEBUG", it.toString())
+            //Log.d("DEBUG", it.toString())
+            //Log.d("IMAGEn", it[id].toString())
             ilustratingADP.updateViewModel(it)
+            //Log.d("setedbaseurl", it[id].toString())
         })
         return view
+
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

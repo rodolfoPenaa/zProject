@@ -14,6 +14,6 @@ interface ILuDao {
     suspend fun insertIlustrations(ilustrationList: List<Ilustration>)
 
     @Query("SELECT * FROM ilustrater_box_alpha ORDER BY id ASC")
-    fun getIlustrationsDDBB(): LiveData<List<Ilustration>>
+    fun getIlustrationsDDBB(): LiveData<MutableList<Ilustration>>
 
 }

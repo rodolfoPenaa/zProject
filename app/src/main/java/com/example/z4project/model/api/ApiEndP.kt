@@ -1,5 +1,6 @@
-package com.example.z4project.model
+package com.example.z4project.model.api
 
+import com.example.z4project.model.Ilustration
 import retrofit2.Call
 import retrofit2.http.GET
 

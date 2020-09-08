@@ -1,4 +1,4 @@
-package com.example.z4project.model
+package com.example.z4project.model.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

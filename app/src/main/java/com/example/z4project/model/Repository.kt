@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.z4project.db.R00mDataBase
+import com.example.z4project.model.api.Rclient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,7 +14,7 @@ import retrofit2.Response
 
 data class Repository(val context: Context) {
     private val instanceIluR00m: R00mDataBase = R00mDataBase.getDDBB(context)
-    private val loadList: LiveData<List<Ilustration>> = instanceIluR00m.dataBASE().getIlustrationsDDBB()
+    private val loadList: LiveData<MutableList<Ilustration>> = instanceIluR00m.dataBASE().getIlustrationsDDBB()
 
     fun fetchDATAs(){
         Rclient.retrofitInstance().getAllIlustration().enqueue(object : Callback<List<Ilustration>> {
@@ -35,7 +36,7 @@ data class Repository(val context: Context) {
         })
     }
 
-   fun loadToViewModel():LiveData<List<Ilustration>> {
+   fun loadToViewModel():LiveData<MutableList<Ilustration>> {
         return loadList
         }
 
