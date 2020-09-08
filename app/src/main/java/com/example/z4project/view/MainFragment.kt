@@ -1,8 +1,7 @@
-package com.example.z4project.ui.main
+package com.example.z4project.view
 
-import android.os.BadParcelableException
+
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.z4project.R
 import com.example.z4project.model.Ilustration
+import com.example.z4project.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.main_fragment.view.*
 
 class MainFragment : Fragment() {
@@ -20,7 +20,7 @@ class MainFragment : Fragment() {
     private var catchedUpdateList:List<Ilustration> = ArrayList<Ilustration>()
     private val BASE_URL = "https://corvalan.dev/evade/"
     private lateinit var mViewModel: MainViewModel
-    private lateinit var ilustratingADP:IlustrationADP
+    private lateinit var ilustratingADP: IlustrationADP
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

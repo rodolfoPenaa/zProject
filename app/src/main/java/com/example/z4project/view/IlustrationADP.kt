@@ -1,15 +1,12 @@
-package com.example.z4project.ui.main
+package com.example.z4project.view
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.view.menu.MenuView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.z4project.R
 import com.example.z4project.model.Ilustration
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_ilustration_list.view.*
 
 class IlustrationADP(var mDATAset:List<Ilustration>):RecyclerView.Adapter<IlustrationADP.IlustrationHolder>(){
@@ -24,8 +21,8 @@ private val BASEURL:String= "https://corvalan.dev/evade/images/"
 class IlustrationHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
     val idText= itemView.idcode
-    val auth= itemView.auth
-    val dataTime= itemView.datime
+    val auth= itemView.datime               ////||||
+    val dataTime= itemView.auth             ////||||
     val piePhoto= itemView.piedefoto
     val ilustration0= itemView.ilustration
 }
@@ -41,7 +38,6 @@ class IlustrationHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         holder.auth.text=ilustracion.autor
         holder.dataTime.text=ilustracion.fechapub
         holder.piePhoto.text=ilustracion.caption
-
         Glide.with(holder.itemView.context).load(BASEURL+mDATAset[position].id).into(holder.ilustration0)
         //Picasso.get().load(mDATAset[position].url).resize(250,250).centerInside().into(holder.ilustration0)
     }

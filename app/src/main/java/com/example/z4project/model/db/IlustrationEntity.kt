@@ -1,7 +1,4 @@
-package com.example.z4project.db
-
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+package com.example.z4project.model.db
 
 //@Entity(tableName = "ilustrater_box")
 class IlustrationEntity(

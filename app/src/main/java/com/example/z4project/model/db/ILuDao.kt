@@ -1,4 +1,4 @@
-package com.example.z4project.db
+package com.example.z4project.model.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
