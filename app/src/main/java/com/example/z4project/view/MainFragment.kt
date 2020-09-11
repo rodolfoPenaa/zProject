@@ -17,7 +17,7 @@ import com.example.z4project.model.Ilustration
 import com.example.z4project.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.main_fragment.view.*
 
-class MainFragment : Fragment(), IlustrationADP.Eintent {
+class MainFragment : Fragment(), IlustrationADP.ToEIntent {
 
     private lateinit var viewModel: MainViewModel
     private var catchedUpdateList:List<Ilustration> = ArrayList<Ilustration>()
@@ -56,8 +56,8 @@ class MainFragment : Fragment(), IlustrationADP.Eintent {
 
     override fun goIgtent(urlGo: String) {
         val gogo: Uri = Uri.parse(urlGo)
-        val intentE : Intent = Intent(Intent.ACTION_VIEW,gogo)
-        startActivity(intentE)
+        val Eintent : Intent = Intent(Intent.ACTION_VIEW,gogo)
+        startActivity(Eintent)
     }
 
 }
