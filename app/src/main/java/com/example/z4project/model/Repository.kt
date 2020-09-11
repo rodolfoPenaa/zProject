@@ -12,12 +12,13 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
 
 data class Repository(val context: Context) {
     private val instanceIluR00m: R00mDataBase = R00mDataBase.getDDBB(context)
-
-    private val service = Rclient.retrofitInstance()
+    private val loadList: LiveData<MutableList<Ilustration>> = instanceIluR00m.dataBASE().getIlustrationsDDBB()
+    //to other api
+    private val service = Rclient.retrofitIg()
+    // to catch clicked
     val liveFromSERVER: MutableLiveData<List<Ilustration>> = MutableLiveData()
 
 
@@ -32,7 +33,7 @@ data class Repository(val context: Context) {
     }
 
     fun fetchDATAs(){
-        Rclient.retrofitInstance().getAllIlustration().enqueue(object : Callback<List<Ilustration>> {
+        Rclient.retrofitIg().getAllIlustration().enqueue(object : Callback<List<Ilustration>> {
             override fun onResponse(
                 call: Call<List<Ilustration>>,
                 response: Response<List<Ilustration>>
@@ -51,7 +52,7 @@ data class Repository(val context: Context) {
         })
     }
 
-    private val loadList: LiveData<MutableList<Ilustration>> = instanceIluR00m.dataBASE().getIlustrationsDDBB()
+
 
     fun loadToViewModel():LiveData<MutableList<Ilustration>> {
         return loadList

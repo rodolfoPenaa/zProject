@@ -16,4 +16,7 @@ interface ILuDao {
     @Query("SELECT * FROM ilustrater_box_alpha ORDER BY id ASC")
     fun getIlustrationsDDBB(): LiveData<MutableList<Ilustration>>
 
+    @Query("SELECT * FROM ilustrater_box_alpha WHERE id=:id")
+    fun getSelected(id:String):LiveData<Ilustration>
+
 }
