@@ -10,5 +10,11 @@
         android:name="com.example.z4project.view.MainFragment"
         android:label="main_fragment"
         tools:layout="@layout/main_fragment" />
+    <fragment
+        android:id="@+id/favoriteScrollingFragment"
+        android:name="com.example.z4project.view.FavoriteScrollingFragment"
+        android:label="fragment_favorite_scrolling"
+        tools:layout="@layout/fragment_favorite_scrolling" />
+
 
 </navigation>

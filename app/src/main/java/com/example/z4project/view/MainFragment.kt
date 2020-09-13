@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.main_fragment.view.*
 
 class MainFragment : Fragment(), IlustrationADP.ToEIntent {
 
-    private lateinit var viewModel: MainViewModel
     private var catchedUpdateList:List<Ilustration> = ArrayList<Ilustration>()
     private lateinit var igurl: LiveData<List<Ilustration>>
     private val BASE_URL = "https://corvalan.dev/evade/"
@@ -56,8 +55,8 @@ class MainFragment : Fragment(), IlustrationADP.ToEIntent {
 
     override fun goIgtent(urlGo: String) {
         val gogo: Uri = Uri.parse(urlGo)
-        val Eintent : Intent = Intent(Intent.ACTION_VIEW,gogo)
-        startActivity(Eintent)
+        val iintent : Intent = Intent(Intent.ACTION_VIEW,gogo)
+        startActivity(iintent)
     }
 
 }

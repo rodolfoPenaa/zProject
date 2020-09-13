@@ -15,23 +15,14 @@ import retrofit2.Response
 
 data class Repository(val context: Context) {
     private val instanceIluR00m: R00mDataBase = R00mDataBase.getDDBB(context)
-    private val loadList: LiveData<MutableList<Ilustration>> = instanceIluR00m.dataBASE().getIlustrationsDDBB()
-    //to other api
-    private val service = Rclient.retrofitIg()
-    // to catch clicked
-    val liveFromSERVER: MutableLiveData<List<Ilustration>> = MutableLiveData()
+    //private val instanceFavIluR00m: R00mDataBase = R00mDataBase.getFavDDBB(context)
+    private val loadList:LiveData<MutableList<Ilustration>> = instanceIluR00m.dataBASE().getIlustrationsDDBB()
+    private var loadFavList:LiveData<List<Ilustration>> = instanceIluR00m.dataBASE().getFavIlustrations()
 
 
-    fun getOnlyServer() = CoroutineScope(Dispatchers.IO).launch {
-        val call0= runCatching {service.getFromEnquee()}
-        call0.onSuccess {
-            liveFromSERVER.postValue(it.body())
-        }
-        call0.onFailure {
-            Log.e("ERROR", it.message.toString())
-        }
+    fun fetchFavDDBB(): LiveData<List<Ilustration>> {
+        return loadFavList
     }
-
     fun fetchDATAs(){
         Rclient.retrofitIg().getAllIlustration().enqueue(object : Callback<List<Ilustration>> {
             override fun onResponse(
@@ -51,9 +42,6 @@ data class Repository(val context: Context) {
             }
         })
     }
-
-
-
     fun loadToViewModel():LiveData<MutableList<Ilustration>> {
         return loadList
         }

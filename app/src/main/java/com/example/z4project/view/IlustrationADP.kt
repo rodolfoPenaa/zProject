@@ -1,18 +1,13 @@
 package com.example.z4project.view
 
-import android.content.DialogInterface
-import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.z4project.R
 import com.example.z4project.model.Ilustration
 import kotlinx.android.synthetic.main.item_ilustration_list.view.*
-import java.net.URL
 
 data class IlustrationADP(var mDATAset:List<Ilustration>,
                           var eIntent:ToEIntent):RecyclerView.Adapter<IlustrationADP.IlustrationHolder>(){
@@ -30,7 +25,7 @@ data class IlustrationADP(var mDATAset:List<Ilustration>,
         val dataTime = itemView.datime
         val piePhoto = itemView.piedefoto
         val ilustration0 = itemView.ilustration
-        val itemView = itemView.auth.setOnClickListener(this)
+        val itemViewforIntent = itemView.auth.setOnClickListener(this)
         override fun onClick(v: View?) {
             eIntent.goIgtent(mDATAset[adapterPosition].url)
         }
