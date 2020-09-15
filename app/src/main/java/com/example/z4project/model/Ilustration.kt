@@ -5,10 +5,10 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "ilustrater_box_alpha")
 class Ilustration (
-    @PrimaryKey val id:String,
+    val id:String,
     val autor:String?,
 //    val publicadopor:String?,
-    val url:String,
+    @PrimaryKey val url:String,
     val fechapub:String,
 //    val tipo:String,
 //    val formato:String,

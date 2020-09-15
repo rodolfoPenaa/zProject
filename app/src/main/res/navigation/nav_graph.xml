@@ -9,10 +9,14 @@
         android:id="@+id/mainFragment"
         android:name="com.example.z4project.view.MainFragment"
         android:label="main_fragment"
-        tools:layout="@layout/main_fragment" />
+        tools:layout="@layout/main_fragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_favoriteScrollingFragment"
+            app:destination="@id/favoriteScrollingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoriteScrollingFragment"
-        android:name="com.example.z4project.view.FavoriteScrollingFragment"
+        android:name="com.example.z4project.view.FavoriteFragment"
         android:label="fragment_favorite_scrolling"
         tools:layout="@layout/fragment_favorite_scrolling" />
 

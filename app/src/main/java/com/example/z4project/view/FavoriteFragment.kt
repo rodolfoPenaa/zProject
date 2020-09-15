@@ -12,19 +12,23 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.z4project.R
 import com.example.z4project.model.Ilustration
+import com.example.z4project.model.IlustrationFavEntity
+import com.example.z4project.view.adapters.FavoriteAdapter
+import com.example.z4project.view.adapters.IlustrationADP
 import com.example.z4project.viewModel.MainViewModel
-import kotlinx.android.synthetic.main.main_fragment.view.*
+import kotlinx.android.synthetic.main.fragment_favorite_scrolling.view.*
 
-class FavoriteScrollingFragment : Fragment(),IlustrationADP.ToEIntent {
-    private var updateFavList:List<Ilustration> = ArrayList<Ilustration>()
+class FavoriteFragment : Fragment(), FavoriteAdapter.ToeIntent{
+
+    private var updateFavList : List<IlustrationFavEntity> = ArrayList<IlustrationFavEntity>()
     private lateinit var favViewModel: MainViewModel
-    private lateinit var ilustratingFavADP: IlustrationADP
+    private lateinit var ilustratingFavADP: FavoriteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         favViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         favViewModel.exposeFromFavDDBB()
-        ilustratingFavADP= IlustrationADP(updateFavList,this)
+        ilustratingFavADP= FavoriteAdapter(updateFavList,this)
     }
 
     override fun onCreateView(
@@ -32,18 +36,20 @@ class FavoriteScrollingFragment : Fragment(),IlustrationADP.ToEIntent {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val view:View = inflater.inflate(R.layout.fragment_favorite_scrolling, container, false)
-        view.recycled_container.adapter = ilustratingFavADP
-        view.recycled_container.layoutManager = LinearLayoutManager(activity)
-        favViewModel.getDATAr00m().observe(viewLifecycleOwner, Observer {
-            ilustratingFavADP.updateViewModel(it)
+        view.favorite_fragment_recycledview.adapter = ilustratingFavADP
+        view.favorite_fragment_recycledview.layoutManager = LinearLayoutManager(activity)
+        favViewModel.exposeFromFavDDBB().observe(viewLifecycleOwner, Observer {
+            ilustratingFavADP.updateFavVM(it)
         })
         return view
     }
 
-    override fun goIgtent(urlGo: String) {
-        val favgogo: Uri = Uri.parse(urlGo)
+    override fun goIg(urlToGo: String) {
+        val favgogo: Uri = Uri.parse(urlToGo)
         val ifavintent : Intent = Intent(Intent.ACTION_VIEW,favgogo)
         startActivity(ifavintent)
     }
+
 }

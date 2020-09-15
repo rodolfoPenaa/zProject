@@ -8,24 +8,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.z4project.R
 import com.example.z4project.model.Ilustration
+import com.example.z4project.model.IlustrationFavEntity
+import com.example.z4project.view.adapters.IlustrationADP
 import com.example.z4project.viewModel.MainViewModel
+import kotlinx.android.synthetic.main.main_fragment.*
 import kotlinx.android.synthetic.main.main_fragment.view.*
 
 class MainFragment : Fragment(), IlustrationADP.ToEIntent {
-
     private var catchedUpdateList:List<Ilustration> = ArrayList<Ilustration>()
     private lateinit var igurl: LiveData<List<Ilustration>>
     private val BASE_URL = "https://corvalan.dev/evade/"
     private lateinit var mViewModel: MainViewModel
     private lateinit var ilustratingADP: IlustrationADP
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewModel= ViewModelProvider(this).get(MainViewModel::class.java)
@@ -39,24 +41,25 @@ class MainFragment : Fragment(), IlustrationADP.ToEIntent {
         val view:View = inflater.inflate(R.layout.main_fragment, container, false)
         view.recycled_container.adapter = ilustratingADP
         view.recycled_container.layoutManager = LinearLayoutManager(activity)
-
         mViewModel.getDATAr00m().observe(viewLifecycleOwner, Observer {
-            //Log.d("DEBUG", it.toString())
-            //Log.d("IMAGEn", it[id].toString())
             ilustratingADP.updateViewModel(it)
         })
+        view.floatingActionButton.setOnClickListener {
+            //Toast.makeText(this, "Floating", Toast.LENGTH_LONG).show()
+            findNavController().navigate(R.id.action_mainFragment_to_favoriteScrollingFragment)
+        }
         return view
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-       //viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
     }
 
     override fun goIgtent(urlGo: String) {
         val gogo: Uri = Uri.parse(urlGo)
         val iintent : Intent = Intent(Intent.ACTION_VIEW,gogo)
         startActivity(iintent)
+    }
+    override fun toInsertFavDDBB(favs: Ilustration) {
+        val favorite = IlustrationFavEntity(id = favs.id, autor = favs.autor, url = favs.url,fechapub = favs.fechapub, caption = favs.caption)
+        mViewModel.saveFavorite(favorite)
+        Toast.makeText(activity, "Favorite Added",Toast.LENGTH_SHORT).show()
     }
 
 }

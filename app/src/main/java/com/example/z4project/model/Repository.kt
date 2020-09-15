@@ -15,35 +15,47 @@ import retrofit2.Response
 
 data class Repository(val context: Context) {
     private val instanceIluR00m: R00mDataBase = R00mDataBase.getDDBB(context)
+
     //private val instanceFavIluR00m: R00mDataBase = R00mDataBase.getFavDDBB(context)
-    private val loadList:LiveData<MutableList<Ilustration>> = instanceIluR00m.dataBASE().getIlustrationsDDBB()
-    private var loadFavList:LiveData<List<Ilustration>> = instanceIluR00m.dataBASE().getFavIlustrations()
+    private val loadList: LiveData<MutableList<Ilustration>> = instanceIluR00m.dataBASE().getIlustrationsDDBB()
+    private var loadFavList: LiveData<List<IlustrationFavEntity>> = instanceIluR00m.dataBASE().getFavIlustrations()
 
-
-    fun fetchFavDDBB(): LiveData<List<Ilustration>> {
+    fun fetchFavDDBB(): LiveData<List<IlustrationFavEntity>> {
         return loadFavList
     }
-    fun fetchDATAs(){
-        Rclient.retrofitIg().getAllIlustration().enqueue(object : Callback<List<Ilustration>> {
-            override fun onResponse(
-                call: Call<List<Ilustration>>,
-                response: Response<List<Ilustration>>
-            ) {
-                   Log.d("apiresponse", response.body().toString())
-                CoroutineScope(Dispatchers.IO).launch {          // To DDBB from call of API//
-                    response.body()?.let { instanceIluR00m.dataBASE().insertIlustrations(it)
+
+    fun putFavDDBB(favIlustration: IlustrationFavEntity) {
+        CoroutineScope(Dispatchers.IO).launch {
+            favIlustration.let {
+                instanceIluR00m.dataBASE().insertSelectioned(it)
+            }
+        }
+    }
+
+        fun fetchDATAs() {
+            Rclient.retrofitIg().getAllIlustration().enqueue(object : Callback<List<Ilustration>> {
+                override fun onResponse(
+                    call: Call<List<Ilustration>>,
+                    response: Response<List<Ilustration>>
+                ) {
+                    Log.d("apiresponse", response.body().toString())
+                    CoroutineScope(Dispatchers.IO).launch {          // To DDBB from call of API//
+                        response.body()?.let {
+                            instanceIluR00m.dataBASE().insertIlustrations(it)
+                        }
                     }
                 }
-            }
-            override fun onFailure(call: Call<List<Ilustration>>, t: Throwable) {
-                //Toast.makeText(, "Network error: $t", Toast.LENGTH_LONG).show()
 
-                Log.e("API", "ERROR $t")
-            }
-        })
-    }
-    fun loadToViewModel():LiveData<MutableList<Ilustration>> {
-        return loadList
+                override fun onFailure(call: Call<List<Ilustration>>, t: Throwable) {
+                    //Toast.makeText(, "Network error: $t", Toast.LENGTH_LONG).show()
+
+                    Log.e("API", "ERROR $t")
+                }
+            })
         }
 
-}
+        fun loadToViewModel(): LiveData<MutableList<Ilustration>> {
+            return loadList
+        }
+
+    }

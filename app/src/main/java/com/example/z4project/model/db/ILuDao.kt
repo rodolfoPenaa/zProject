@@ -7,6 +7,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.z4project.model.Ilustration
+import com.example.z4project.model.IlustrationFavEntity
 
 
 @Dao
@@ -18,13 +19,13 @@ interface ILuDao {
     @Query("SELECT * FROM ilustrater_box_alpha ORDER BY id ASC")
     fun getIlustrationsDDBB(): LiveData<MutableList<Ilustration>>
 
-    @Query("SELECT * FROM ilustrater_box_alpha WHERE id=:id")
-    fun getAuthSelectedDDBB(id:String):LiveData<Ilustration>
+    @Query("SELECT * FROM ilustrater_box_alpha WHERE id=:url")
+    fun getAuthSelectedDDBB(url:String):LiveData<Ilustration>
 
     //FAV
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertSelectioned(favIlustration: Ilustration)
+    suspend fun insertSelectioned(insertFav:IlustrationFavEntity)
 
-    @Query("SELECT * FROM ilustrater_fav_box ORDER BY id ASC")
-    fun getFavIlustrations():LiveData<List<Ilustration>>
+    @Query("SELECT * FROM ilustrater_fav_box ORDER BY autor ASC")
+    fun getFavIlustrations():LiveData<List<IlustrationFavEntity>>
 }
