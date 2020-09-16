@@ -2,10 +2,7 @@ package com.example.z4project.model.db
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.z4project.model.Ilustration
 import com.example.z4project.model.IlustrationFavEntity
 
@@ -13,11 +10,20 @@ import com.example.z4project.model.IlustrationFavEntity
 @Dao
 interface ILuDao {
     //ALL
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertIlustrations(ilustrationList: List<Ilustration>)
 
-    @Query("SELECT * FROM ilustrater_box_alpha ORDER BY id ASC")
-    fun getIlustrationsDDBB(): LiveData<MutableList<Ilustration>>
+    @Delete
+    fun deleteFromall(changeToFav0: Ilustration)
+
+    @Update
+    fun updateAllDDBB(changeToFav: Ilustration)
+
+   /* @Query("SELECT * FROM ilustrater_box_alpha ORDER BY id ASC")
+    fun getIlustrationsDDBB(): LiveData<MutableList<Ilustration>>*/
+
+    @Query("SELECT * FROM ilustrater_box_alpha WHERE inFav=0") // [0= false - 1= true]
+    fun getIlustrationsDDBB():LiveData<MutableList<Ilustration>>
 
     @Query("SELECT * FROM ilustrater_box_alpha WHERE id=:url")
     fun getAuthSelectedDDBB(url:String):LiveData<Ilustration>

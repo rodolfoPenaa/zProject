@@ -52,4 +52,5 @@ class FavoriteFragment : Fragment(), FavoriteAdapter.ToeIntent{
         startActivity(ifavintent)
     }
 
+
 }

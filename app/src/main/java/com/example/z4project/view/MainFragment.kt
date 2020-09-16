@@ -21,13 +21,15 @@ import com.example.z4project.view.adapters.IlustrationADP
 import com.example.z4project.viewModel.MainViewModel
 import kotlinx.android.synthetic.main.main_fragment.*
 import kotlinx.android.synthetic.main.main_fragment.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainFragment : Fragment(), IlustrationADP.ToEIntent {
     private var catchedUpdateList:List<Ilustration> = ArrayList<Ilustration>()
-    private lateinit var igurl: LiveData<List<Ilustration>>
-    private val BASE_URL = "https://corvalan.dev/evade/"
     private lateinit var mViewModel: MainViewModel
     private lateinit var ilustratingADP: IlustrationADP
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewModel= ViewModelProvider(this).get(MainViewModel::class.java)
@@ -45,7 +47,6 @@ class MainFragment : Fragment(), IlustrationADP.ToEIntent {
             ilustratingADP.updateViewModel(it)
         })
         view.floatingActionButton.setOnClickListener {
-            //Toast.makeText(this, "Floating", Toast.LENGTH_LONG).show()
             findNavController().navigate(R.id.action_mainFragment_to_favoriteScrollingFragment)
         }
         return view
@@ -60,6 +61,15 @@ class MainFragment : Fragment(), IlustrationADP.ToEIntent {
         val favorite = IlustrationFavEntity(id = favs.id, autor = favs.autor, url = favs.url,fechapub = favs.fechapub, caption = favs.caption)
         mViewModel.saveFavorite(favorite)
         Toast.makeText(activity, "Favorite Added",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun changeToFav(favOff: Ilustration) {
+        favOff.inFav = true
+        CoroutineScope(Dispatchers.IO).launch {
+            favOff.let {
+                mViewModel.updateToFav(favOff)
+            }
+        }
     }
 
 }

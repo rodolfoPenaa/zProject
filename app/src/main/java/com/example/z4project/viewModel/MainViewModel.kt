@@ -17,6 +17,14 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         fromRepository.putFavDDBB(viewMFav)
     }
 
+    fun changeToFav(catchedIlustration:Ilustration){
+        return fromRepository.cleanFromAll(catchedIlustration)
+    }
+
+    fun updateToFav(catchedUpdateIlustration:Ilustration){
+        return fromRepository.updateFromAll(catchedUpdateIlustration)
+    }
+
     fun exposeFromFavDDBB(): LiveData<List<IlustrationFavEntity>> {
         return loadedFavList
     }

@@ -9,6 +9,9 @@ import com.example.z4project.R
 import com.example.z4project.model.Ilustration
 import com.example.z4project.model.IlustrationFavEntity
 import kotlinx.android.synthetic.main.item_ilustration_list.view.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 data class IlustrationADP(var mDATAset:List<Ilustration>,
                           var eIntent: ToEIntent
@@ -36,6 +39,7 @@ data class IlustrationADP(var mDATAset:List<Ilustration>,
         }
         override fun onLongClick(p0: View?): Boolean {
             eIntent.toInsertFavDDBB(mDATAset[adapterPosition])
+            eIntent.changeToFav(mDATAset[adapterPosition])
         return true
         }
     }
@@ -53,7 +57,6 @@ data class IlustrationADP(var mDATAset:List<Ilustration>,
         holder.dataTime.text = ilustracion.fechapub
         holder.piePhoto.text = ilustracion.caption
         Glide.with(holder.itemView.context).load(BASEURL + mDATAset[position].id).into(holder.ilustration0)
-        //Picasso.get().load(mDATAset[position].url).resize(250,250).centerInside().into(holder.ilustration0)
     }
 
     override fun getItemCount(): Int {
@@ -63,5 +66,6 @@ data class IlustrationADP(var mDATAset:List<Ilustration>,
     interface ToEIntent{
         fun goIgtent(urlGo: String)
         fun toInsertFavDDBB(favs:Ilustration)
+        fun changeToFav(favOff:Ilustration)
     }
 }

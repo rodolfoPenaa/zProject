@@ -23,6 +23,7 @@ class FavoriteAdapter(var mDATAset:List<IlustrationFavEntity>,
         val dataTime = itemView.datime
         val piePhoto = itemView.piedefoto
         val ilustration1 = itemView.ilustration
+
         val gotoinstagram = itemView.auth.setOnClickListener(this)
         override fun onClick(v: View?) {
             eIntent.goIg(mDATAset[adapterPosition].url)

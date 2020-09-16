@@ -19,5 +19,6 @@ class Ilustration (
     val caption:String?,
 //    val descripcionimagen:String,
 //    val textoimagen:String
+    var inFav:Boolean
 ) {
 }

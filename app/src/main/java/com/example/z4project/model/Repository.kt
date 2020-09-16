@@ -32,7 +32,15 @@ data class Repository(val context: Context) {
         }
     }
 
-        fun fetchDATAs() {
+    fun updateFromAll(updatedIlustration: Ilustration){
+        instanceIluR00m.dataBASE().updateAllDDBB(updatedIlustration)
+    }
+
+    fun cleanFromAll(deleteIlustration: Ilustration){
+        instanceIluR00m.dataBASE().deleteFromall(deleteIlustration)
+    }
+
+    fun fetchDATAs() {
             Rclient.retrofitIg().getAllIlustration().enqueue(object : Callback<List<Ilustration>> {
                 override fun onResponse(
                     call: Call<List<Ilustration>>,
@@ -54,7 +62,7 @@ data class Repository(val context: Context) {
             })
         }
 
-        fun loadToViewModel(): LiveData<MutableList<Ilustration>> {
+    fun loadToViewModel(): LiveData<MutableList<Ilustration>> {
             return loadList
         }
 
