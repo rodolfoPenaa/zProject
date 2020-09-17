@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -19,7 +18,6 @@ import com.example.z4project.model.Ilustration
 import com.example.z4project.model.IlustrationFavEntity
 import com.example.z4project.view.adapters.IlustrationADP
 import com.example.z4project.viewModel.MainViewModel
-import kotlinx.android.synthetic.main.main_fragment.*
 import kotlinx.android.synthetic.main.main_fragment.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -60,14 +58,14 @@ class MainFragment : Fragment(), IlustrationADP.ToEIntent {
     override fun toInsertFavDDBB(favs: Ilustration) {
         val favorite = IlustrationFavEntity(id = favs.id, autor = favs.autor, url = favs.url,fechapub = favs.fechapub, caption = favs.caption)
         mViewModel.saveFavorite(favorite)
-        Toast.makeText(activity, "Favorite Added",Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity,R.string.FavAdded,Toast.LENGTH_SHORT).show()
     }
 
-    override fun changeToFav(favOff: Ilustration) {
-        favOff.inFav = true
+    override fun changeToFav(favOn: Ilustration) {
+        favOn.inFav = true
         CoroutineScope(Dispatchers.IO).launch {
-            favOff.let {
-                mViewModel.updateToFav(favOff)
+            favOn.let {
+                mViewModel.updateToFav(favOn)
             }
         }
     }

@@ -13,16 +13,28 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val loadedList: LiveData<MutableList<Ilustration>> = fromRepository.loadToViewModel()
     private val loadedFavList: LiveData<List<IlustrationFavEntity>> = fromRepository.fetchFavDDBB()
 
+    fun removeFromFav(catchedFavIlu:IlustrationFavEntity){
+        return fromRepository.cleanFromFav(catchedFavIlu)
+    }
+
     fun saveFavorite(viewMFav:IlustrationFavEntity){
         fromRepository.putFavDDBB(viewMFav)
     }
 
-    fun changeToFav(catchedIlustration:Ilustration){
-        return fromRepository.cleanFromAll(catchedIlustration)
-    }
-
     fun updateToFav(catchedUpdateIlustration:Ilustration){
         return fromRepository.updateFromAll(catchedUpdateIlustration)
+    }
+
+    fun updateFromFav(catchedUpdateIlustration:Ilustration){
+        return fromRepository.putAddbb(catchedUpdateIlustration)
+    }
+
+    fun undertacker(cancelUpdate:Ilustration){
+        return fromRepository.cleanFromAll(cancelUpdate)
+    }
+
+    fun getDATAr00m(): LiveData<MutableList<Ilustration>>{
+        return loadedList
     }
 
     fun exposeFromFavDDBB(): LiveData<List<IlustrationFavEntity>> {
@@ -33,9 +45,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         return fromRepository.fetchDATAs()
     }
 
-    fun getDATAr00m(): LiveData<MutableList<Ilustration>>{
-        return loadedList
-    }
+
 
 
 }

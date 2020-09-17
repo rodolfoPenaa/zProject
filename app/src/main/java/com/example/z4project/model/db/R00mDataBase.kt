@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.z4project.model.Ilustration
 import com.example.z4project.model.IlustrationFavEntity
 
-@Database(entities = [Ilustration::class, IlustrationFavEntity::class],version = 5113, exportSchema = false)
+@Database(entities = [Ilustration::class, IlustrationFavEntity::class],version = 7113, exportSchema = false)
 abstract class R00mDataBase:RoomDatabase() {
     abstract fun dataBASE(): ILuDao
     companion object{
@@ -21,14 +21,5 @@ abstract class R00mDataBase:RoomDatabase() {
             }
             return ddbb!!
         }
-       /* private var favDDBB:R00mDataBase? = null
-        fun getFavDDBB(context: Context): R00mDataBase{
-            if (favDDBB==null) synchronized(this){
-                favDDBB=Room.databaseBuilder(context.applicationContext,
-                    R00mDataBase::class.java,
-                    "ilustrater_fav_box").build()
-            }
-            return favDDBB!!
-        }*/
     }
 }

@@ -17,6 +17,9 @@ class FavoriteAdapter(var mDATAset:List<IlustrationFavEntity>,
         mDATAset = ilustrationList
         notifyDataSetChanged()
     }
+    fun intToObject(itemposition:Int):IlustrationFavEntity{
+        return mDATAset[itemposition]
+    }
     private val BASEurl: String = "https://corvalan.dev/evade/images/"
     inner class FavHolder(itemView: View): RecyclerView.ViewHolder(itemView),View.OnClickListener{
         val auth = itemView.auth
