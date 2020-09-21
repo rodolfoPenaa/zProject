@@ -33,7 +33,6 @@ class MainFragment : Fragment(), IlustrationADP.ToEIntent {
         mViewModel= ViewModelProvider(this).get(MainViewModel::class.java)
         mViewModel.refreshDATAserver()
         ilustratingADP= IlustrationADP(catchedUpdateList,this)
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -52,9 +51,10 @@ class MainFragment : Fragment(), IlustrationADP.ToEIntent {
 
     override fun goIgtent(urlGo: String) {
         val gogo: Uri = Uri.parse(urlGo)
-        val iintent : Intent = Intent(Intent.ACTION_VIEW,gogo)
+        val iintent = Intent(Intent.ACTION_VIEW,gogo)
         startActivity(iintent)
     }
+
     override fun toInsertFavDDBB(favs: Ilustration) {
         val favorite = IlustrationFavEntity(id = favs.id, autor = favs.autor, url = favs.url,fechapub = favs.fechapub, caption = favs.caption)
         mViewModel.saveFavorite(favorite)

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.z4project.model.Ilustration
 import com.example.z4project.model.IlustrationFavEntity
 
-@Database(entities = [Ilustration::class, IlustrationFavEntity::class],version = 7113, exportSchema = false)
+@Database(entities = [Ilustration::class, IlustrationFavEntity::class],version = 1, exportSchema = false)
 abstract class R00mDataBase:RoomDatabase() {
     abstract fun dataBASE(): ILuDao
     companion object{

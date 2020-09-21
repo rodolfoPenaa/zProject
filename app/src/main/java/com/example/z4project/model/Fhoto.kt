@@ -1,4 +1,7 @@
 package com.example.z4project.model
 
-class Fhoto( photourl: String) {
+import android.graphics.Bitmap
+
+class Fhoto(val bitmapPhoto:Bitmap) {
+
 }

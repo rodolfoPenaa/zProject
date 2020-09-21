@@ -17,22 +17,23 @@ data class IlustrationADP(var mDATAset:List<Ilustration>,
                           var eIntent: ToEIntent
 ):RecyclerView.Adapter<IlustrationADP.IlustrationHolder>(){
 
-    private val BASEURL: String = "https://corvalan.dev/evade/images/"
+    val BASEURL: String = "https://corvalan.dev/evade/images/"
 
-    fun updateViewModel(ilustrationList: List<Ilustration>) {     //for update observer, usually for  Adapter with a empty List() in the destine.
+    fun updateViewModel(ilustrationList: List<Ilustration>) {
         mDATAset = ilustrationList
         notifyDataSetChanged()
     }
 
     inner class IlustrationHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener,
         View.OnLongClickListener {
-        //val idText = itemView.idcode
         val auth = itemView.auth
+        val authSay = itemView.auth_say
         val dataTime = itemView.datime
         val piePhoto = itemView.piedefoto
         val ilustration0 = itemView.ilustration
         val itemtofavDDBB = itemView.ilustration.setOnLongClickListener(this)
         val itemViewforIntent = itemView.auth.setOnClickListener(this)
+        val itemVforIntent = itemView.auth_say.setOnClickListener(this)
 
         override fun onClick(v: View?) {
             eIntent.goIgtent(mDATAset[adapterPosition].url)
@@ -52,11 +53,12 @@ data class IlustrationADP(var mDATAset:List<Ilustration>,
 
     override fun onBindViewHolder(holder: IlustrationHolder, position: Int) {
         val ilustracion: Ilustration = mDATAset[position]
-        //holder.idText.text = ilustracion.id
+        val IlustrationHost = BASEURL + mDATAset[position].id
+        Glide.with(holder.itemView.context).load(IlustrationHost).into(holder.ilustration0)
         holder.auth.text = ilustracion.autor
+        holder.authSay.text = ilustracion.autor
         holder.dataTime.text = ilustracion.fechapub
         holder.piePhoto.text = ilustracion.caption
-        Glide.with(holder.itemView.context).load(BASEURL + mDATAset[position].id).into(holder.ilustration0)
     }
 
     override fun getItemCount(): Int {
@@ -66,6 +68,6 @@ data class IlustrationADP(var mDATAset:List<Ilustration>,
     interface ToEIntent{
         fun goIgtent(urlGo: String)
         fun toInsertFavDDBB(favs:Ilustration)
-        fun changeToFav(favOff:Ilustration)
+        fun changeToFav(favToOff:Ilustration)
     }
 }

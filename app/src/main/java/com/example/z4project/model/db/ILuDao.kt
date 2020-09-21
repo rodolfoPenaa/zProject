@@ -12,25 +12,22 @@ import javax.net.ssl.HttpsURLConnection
 interface ILuDao {
     //ALL
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertIlustrations(ilustrationList: List<Ilustration>)
+    suspend fun insertIlustrations(ilustrationList:List<Ilustration>)
 
     @Update
-    suspend fun insertAilustration(ilustration: Ilustration)
+    suspend fun insertAilustration(changeToFav1:Ilustration)
+
+    @Update
+    suspend fun updateAllDDBB(changeToFav0:Ilustration)
 
     @Delete
-    fun deleteFromall(changeToFav0: Ilustration)
-
-    @Update
-    fun updateAllDDBB(changeToFav: Ilustration)
-
-    /*@Query("SELECT * FROM ilustrater_box_alpha ORDER BY id ASC")
-    fun getIlustrationsDDBB(): LiveData<MutableList<Ilustration>>*/
+    suspend fun deleteFromall(deleteIlu:Ilustration)
 
     @Query("SELECT * FROM ilustrater_box_alpha WHERE inFav=0") // [0= false - 1= true]
     fun getIlustrationsDDBB():LiveData<MutableList<Ilustration>>
 
     @Query("SELECT * FROM ilustrater_box_alpha WHERE id=:url")
-    fun getAuthSelectedDDBB(url:String):LiveData<Ilustration>
+    fun getAuthSelectedDDBB(url:String):Ilustration
 
     //FAV
     @Insert(onConflict = OnConflictStrategy.REPLACE)

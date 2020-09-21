@@ -1,8 +1,5 @@
 package com.example.z4project.view
 
-import android.app.AlertDialog
-import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -23,10 +20,7 @@ import com.example.z4project.model.IlustrationFavEntity
 import com.example.z4project.view.adapters.FavoriteAdapter
 import com.example.z4project.viewModel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_favorite_scrolling.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.fragment_favorite.view.*
 
 class FavoriteFragment : Fragment(), FavoriteAdapter.ToeIntent{
 
@@ -46,7 +40,7 @@ class FavoriteFragment : Fragment(), FavoriteAdapter.ToeIntent{
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view:View = inflater.inflate(R.layout.fragment_favorite_scrolling, container, false)
+        val view:View = inflater.inflate(R.layout.fragment_favorite, container, false)
         view.favorite_fragment_recycledview.adapter = ilustratingFavADP
         view.favorite_fragment_recycledview.layoutManager = LinearLayoutManager(activity)
         favViewModel.exposeFromFavDDBB().observe(viewLifecycleOwner, Observer {
@@ -66,10 +60,10 @@ class FavoriteFragment : Fragment(), FavoriteAdapter.ToeIntent{
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 Toast.makeText(context, "Erased", Toast.LENGTH_SHORT).show()
                 val erasedItemPosition = viewHolder.adapterPosition
-                val favItemErased:IlustrationFavEntity = ilustratingFavADP.intToObject(erasedItemPosition)
+                val favItemErased = ilustratingFavADP.intToObject(erasedItemPosition)
                 val objetoIlustration = toReturn(favItemErased)
-                returnToAll(objetoIlustration)
-                favViewModel.updateFromFav(objetoIlustration)
+                val goILustration = returnToAll(objetoIlustration)
+                favViewModel.updateFromFav(goILustration)
                 favViewModel.removeFromFav(favItemErased)
                 Snackbar.make(
                     view.favorite_fragment_recycledview,
@@ -80,11 +74,9 @@ class FavoriteFragment : Fragment(), FavoriteAdapter.ToeIntent{
                         favViewModel.saveFavorite(favItemErased)
                         favViewModel.undertacker(objetoIlustration)
                     }
-                    setActionTextColor(Color.YELLOW)
+                    setActionTextColor(Color.DKGRAY)
                 }.show()
-
             }
-
         }
         val itemswipe = ItemTouchHelper(itemtouchH)
         itemswipe.attachToRecyclerView(view.favorite_fragment_recycledview)
@@ -97,32 +89,13 @@ class FavoriteFragment : Fragment(), FavoriteAdapter.ToeIntent{
         startActivity(ifavintent)
     }
 
-    /*fun invokeDlg (context:Context, removeFav:Ilustration,positiveButtonClickListener: DialogInterface.OnClickListener,
-                   negaitveButtonClickListener:DialogInterface.OnClickListener):AlertDialog{
-        val builderDialog = AlertDialog.Builder(context)
-            .setTitle("Erase Favorite")
-            .setMessage("Really?").setCancelable(true)
-            .setPositiveButton(R.string.YesBtn,positiveButtonClickListener)
-            .setNegativeButton(R.string.NoBtn,negaitveButtonClickListener)
-        val alert =builderDialog.create()
-        return alert
-    }
-
-    */
-
     fun toReturn(fAll: IlustrationFavEntity):Ilustration {
         val all = Ilustration(id = fAll.id, autor = fAll.autor, url = fAll.url,fechapub = fAll.fechapub, caption = fAll.caption)
-        favViewModel.updateFromFav(all)
-        //Toast.makeText(activity,R.string.FavAdded,Toast.LENGTH_SHORT).show()
         return all
     }
 
-    fun returnToAll(favOff: Ilustration) {
+    fun returnToAll(favOff: Ilustration):Ilustration {
         favOff.inFav = false
-        CoroutineScope(Dispatchers.IO).launch {
-            favOff.let {
-                favViewModel.updateFromFav(favOff)
-            }
+        return favOff
         }
-    }
 }

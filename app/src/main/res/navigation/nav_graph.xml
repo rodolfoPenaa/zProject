@@ -3,8 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/initFragment">
 
+    <fragment
+        android:id="@+id/initFragment"
+        android:name="com.example.z4project.view.InitFragment"
+        android:label="fragment_init"
+        tools:layout="@layout/fragment_init" >
+        <action
+            android:id="@+id/action_initFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.z4project.view.MainFragment"
@@ -12,13 +21,12 @@
         tools:layout="@layout/main_fragment" >
         <action
             android:id="@+id/action_mainFragment_to_favoriteScrollingFragment"
-            app:destination="@id/favoriteScrollingFragment" />
+            app:destination="@id/favoriteFragment" />
     </fragment>
     <fragment
-        android:id="@+id/favoriteScrollingFragment"
+        android:id="@+id/favoriteFragment"
         android:name="com.example.z4project.view.FavoriteFragment"
         android:label="fragment_favorite_scrolling"
-        tools:layout="@layout/fragment_favorite_scrolling" />
-
+        tools:layout="@layout/fragment_favorite" />
 
 </navigation>
