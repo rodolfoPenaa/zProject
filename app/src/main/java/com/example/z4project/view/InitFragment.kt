@@ -15,9 +15,9 @@ import kotlinx.android.synthetic.main.fragment_init.view.*
 
 class InitFragment : Fragment() {
     private val WELCOMEURL:String="https://rodolfopenaa.github.io/ep.1/v2zh0r4Pr0j3ct.jpg"
+    private val WELCOMEURLS:String="https://picsum.photos/400"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -25,8 +25,11 @@ class InitFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view:View = inflater.inflate(R.layout.fragment_init, container, false)
-        //Glide.with(view.context.applicationContext).load(WELCOMEURL).into(view.introApp)
-        Picasso.get().load(WELCOMEURL).placeholder(R.drawable.img_charge_foreground).resize(640,480).into(view.introApp)
+        Picasso.get()
+            .load(WELCOMEURL)
+            .placeholder(R.drawable.img_charge_foreground)
+            .resize(640,480)
+            .into(view.introApp)
         view.igButton.setOnClickListener{
             findNavController().navigate(R.id.action_initFragment_to_mainFragment)
         }
