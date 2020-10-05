@@ -1,16 +1,36 @@
 package com.example.z4project.viewModel
 
 import android.app.Application
+import android.util.Log
+import retrofit2.HttpException
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.z4project.model.Ilustration
 import com.example.z4project.model.IlustrationFavEntity
 import com.example.z4project.model.Repository
+import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
-    private val fromRepository=Repository(application)
+    val fromRepository=Repository(application)
     private val loadedList: LiveData<MutableList<Ilustration>> = fromRepository.loadToView()
     private val loadedFavList: LiveData<List<IlustrationFavEntity>> = fromRepository.fetchFavDDBB()
+
+    val word1 = MutableLiveData<String>()
+
+    fun fetchPhrase() = viewModelScope.launch {
+        try {
+            fromRepository.suspendWord()
+        }catch (e:HttpException){
+         word1.postValue("404")
+            Log.e("APIfail", e.toString())
+        }catch (e:Exception) {
+            word1.postValue("Critical Error")
+            Log.e("No http", e.toString())
+        }
+    }
 
     fun updateToFav(catchedUpdateIlustration:Ilustration){
         return fromRepository.updateFromAll(catchedUpdateIlustration)
@@ -43,8 +63,5 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     fun refreshDATAserver(){
         return fromRepository.fetchDATAs()
     }
-
-
-
 
 }

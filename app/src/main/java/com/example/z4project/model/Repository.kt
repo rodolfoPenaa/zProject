@@ -1,26 +1,42 @@
 package com.example.z4project.model
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.util.Log
 import android.widget.Toast
-import androidx.core.graphics.drawable.toDrawable
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.z4project.model.db.R00mDataBase
 import com.example.z4project.model.api.Rclient
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.awaitResponse
 
 data class Repository(val context: Context) {
     private val instanceIluR00m: R00mDataBase = R00mDataBase.getDDBB(context)
     private val loadList: LiveData<MutableList<Ilustration>> = instanceIluR00m.dataBASE().getIlustrationsDDBB()
     private val loadFavList: LiveData<List<IlustrationFavEntity>> = instanceIluR00m.dataBASE().getFavIlustrations()
+    var word0 = MutableLiveData<DailyWord>()
+    var word1 = MutableLiveData<String>()
+
+    fun fetchSync(){
+            Rclient.retroPhrase().dailyWORDS().enqueue(object : Callback<DailyWord>{
+                override fun onResponse(call: Call<DailyWord>, response: Response<DailyWord>) {
+                    word0.postValue(response.body())
+                    Log.d("me repo", word0.toString())
+                }
+                override fun onFailure(call: Call<DailyWord>, t: Throwable) {
+                    word1.postValue(t.toString())
+                    Log.e("me repo", t.toString())
+                }
+            })
+    }
+
+    suspend fun suspendWord() {
+        word0.postValue(Rclient.retroPhrase().dailyWords())
+    }
 
     fun fetchDATAs() {
         Rclient.retrofitIlu().getAllIlustration().enqueue(object : Callback<List<Ilustration>> {

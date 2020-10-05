@@ -7,6 +7,7 @@ class Rclient() {
 
     companion object{
         private const val BASE_IG = "https://corvalan.dev/evade/"
+        private const val WELCOMEBASE = "https://www.affirmations.dev/"
 
         fun retrofitIlu(): ApiEndP{
             val retrofit = Retrofit.Builder()
@@ -15,5 +16,13 @@ class Rclient() {
                 .build()
             return retrofit.create(ApiEndP::class.java)
         }
+
+        fun retroPhrase():ApiEndP{
+            val retrofitSUSPEND = Retrofit.Builder()
+                .baseUrl(WELCOMEBASE)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+            return retrofitSUSPEND.create(ApiEndP::class.java)
     }
+}
 }

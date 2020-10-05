@@ -2,13 +2,14 @@ package com.example.z4project.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "ilustrater_box_alpha")
-class Ilustration (
-    val id:String,
-    val autor:String?,
+data class Ilustration (
+    @SerializedName("id")val id:String,
+    @SerializedName("autor")val autor:String?,
 //    val publicadopor:String?,
-    @PrimaryKey val url:String,
+    @SerializedName("url")@PrimaryKey val url:String,
     val fechapub:String,
 //    val tipo:String,
 //    val formato:String,
@@ -16,9 +17,9 @@ class Ilustration (
 //    val original:String,
 //    val afectos:String?,
 //    val tags:String,
-    val caption:String?,
+    @SerializedName("caption")val caption:String?,
 //    val descripcionimagen:String,
 //    val textoimagen:String
-    var inFav:Boolean =false
+    @SerializedName("inFav")var inFav:Boolean=false
 ) {
 }

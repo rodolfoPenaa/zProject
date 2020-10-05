@@ -15,19 +15,19 @@
         android:layout_marginRight="20dp"
         android:contentDescription="@string/fuera_piñera"
         android:src="@drawable/img_support_foreground"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/welcomewords"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/welcomewords"
         android:layout_width="352dp"
         android:layout_height="50dp"
         android:layout_margin="30dp"
         android:layout_marginBottom="39dp"
-        android:text="@string/welcome_intro"
         android:textStyle="normal"
+        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/introApp"
         app:layout_constraintBottom_toTopOf="@+id/igButton"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,12 +38,13 @@
         style="@style/CardView.Dark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
         android:shadowRadius="@integer/config_navAnimTime"
         android:text="@string/ilustrations_18_oct"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
